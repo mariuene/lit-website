@@ -21,14 +21,14 @@ document.onmousemove = function(e){
 
 //initialise the program
 function init() {
-    cle.src = '../img/cle.png';
-    fire.src = '../img/fire.png';
-    hundre.src = '../img/hundre.png';
-    boller_1.src = '../img/boller_1.png';
-    boller_2.src = '../img/boller_2.png';
-    ex_1.src = '../img/ex_1.png';
-    ex_2.src = '../img/ex_2.png';
-    ex_3.src = '../img/ex_3.png';
+    cle.src = 'img/cle.png';
+    fire.src = 'img/fire.png';
+    hundre.src = 'img/hundre.png';
+    boller_1.src = 'img/boller_1.png';
+    boller_2.src = 'img/boller_2.png';
+    ex_1.src = 'img/ex_1.png';
+    ex_2.src = 'img/ex_2.png';
+    ex_3.src = 'img/ex_3.png';
     exps.push([ex_1, ex_2, ex_3]);
     window.requestAnimationFrame(draw);
 }

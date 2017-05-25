@@ -45,10 +45,19 @@ function draw() {
       }
       var aHundred = new Onehundred();
       var boller = new LitFam();
+      let rootFire = new LinkedListFire(cursorX, cursorY);
+      let lastFire = rootFire;
 
       setInterval(function(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        makeLit(canvas, ctx);
+        const newFire = new LinkedListFire(cursorX, cursorY);
+        if(rootFire === null) {
+          rootFire = newFire;
+        }
+        else {
+          lastFire.setNext(newFire);
+        }
+        lastFire = newFire;
 
         for (let emoji of cles) {
             emoji.move();
@@ -61,19 +70,45 @@ function draw() {
 
         boller.draw(ctx);
 
-        for (let flame of fires) {
-            flame.move();
-            flame.draw(ctx);
+        let linkedElement = rootFire;
+        let prevElement = null;
+        while(linkedElement !== null) {
+          const flame = linkedElement.element;
+          const next = linkedElement.next;
+          flame.move();
+          flame.draw(ctx);
+          if(flame.outsideScreen()) {
+            // Deleting root element
+            if(prevElement === null) {
+              rootFire = next;
+              linkedElement = next;
+            }
+            // Deleting element in the middle of the list
+            else {
+              prevElement.setNext(next);
+              linkedElement = next;
+            }
+          }
+          else {
+            // Iterate to next element normally
+            prevElement = linkedElement;
+            linkedElement = next;
+          }
         }
       }, 25);
 }
 
-//adds a new fire
-function makeLit(canvas, ctx) {
-    var flame = new Fire(cursorX, cursorY)
-    fires.push(flame);
-}
+// Bastardized linked list
+class LinkedListFire {
+  constructor(cursorX, cursorY) {
+    this.element = new Fire(cursorX, cursorY);
+    this.next = null;
+  }
 
+  setNext(next) {
+    this.next = next;
+  }
+}
 
 //this emoji is lit, and sparkles from your mouse.
 class Fire {
@@ -92,6 +127,13 @@ class Fire {
     //force
     this.x += this.vx;
 
+  }
+
+  outsideScreen() {
+    const outsideBottom = this.y > (window.innerHeight + fire.height)
+    const outsideLeft = (this.x + fire.width) < 0;
+    const outsideRight = this.x > window.innerWidth;
+    return outsideBottom || outsideLeft || outsideRight || isNaN(this.y);
   }
 
   draw(ctx) {

@@ -24,11 +24,11 @@ document.onmousemove = function(e){
 
 //initialise the program
 function init() {
-    cle.src = 'img/cle.png';
-    fire.src = 'img/fire.png';
-    hundre.src = 'img/hundre.png';
-    boller_1.src = 'img/boller_1.png';
-    boller_2.src = 'img/boller_2.png';
+    cle.src = '../img/cle.png';
+    fire.src = '../img/fire.png';
+    hundre.src = '../img/hundre.png';
+    boller_1.src = '../img/boller_1.png';
+    boller_2.src = '../img/boller_2.png';
     window.requestAnimationFrame(draw);
 }
 
